@@ -8,6 +8,8 @@ import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 
+import com.vccorp.training.Point;
+
 
 public class MapKM extends Mapper<LongWritable, Text, Text, Text>{
 	
@@ -16,28 +18,18 @@ public class MapKM extends Mapper<LongWritable, Text, Text, Text>{
 	public static final Text c = new Text("C");
 	private Text str = new Text();
 	
-	class Point{
-		public double x;
-		public double y;
-		
-		public Point(double d, double e){
-			this.x = d;
-			this.y = e;
-		}
-	}
-	
-	public static double Distance(Point A, Point B){
-		double distan = Math.sqrt(Math.pow(A.x - B.x, 2) + Math.pow(A.y - B.y, 2));
-		return distan;
-	}
-	@SuppressWarnings("unused")
 	protected void map(LongWritable key, Text value, Context context)
 			throws IOException, InterruptedException {
 		// TODO Auto-generated method stub
-		Configuration conf = context.getConfiguration();
-		String centorids = conf.get("centorids"); 
-		String[] arrCentorids = centorids.split("\\s");
+		System.out.println("Mapper running good");
 		
+		Configuration conf = context.getConfiguration();
+		String centorids = conf.get("centorids");
+		String hola = conf.get("hola");
+		System.out.println(hola);
+		String[] arrCentorids = centorids.split("\t");
+		System.out.println("Mapper running good");
+		System.out.println(arrCentorids);
 		Point centoridA = new Point(Double.parseDouble(arrCentorids[0]), Double.parseDouble(arrCentorids[1]));
 		Point centoridB = new Point(Double.parseDouble(arrCentorids[2]), Double.parseDouble(arrCentorids[3]));
 		Point centoridC = new Point(Double.parseDouble(arrCentorids[4]), Double.parseDouble(arrCentorids[5]));
@@ -46,16 +38,16 @@ public class MapKM extends Mapper<LongWritable, Text, Text, Text>{
 		StringTokenizer tokenizer = new StringTokenizer(line);
 		while (tokenizer.hasMoreElements()) {
 			str.set(tokenizer.nextToken());
-			String[] words = tokenizer.nextToken().split("\\s");
+			String[] words = tokenizer.nextToken().split("\t");
 			Point inputPoint = new Point(Double.parseDouble(words[0]), Double.parseDouble(words[1]));
-			if(Distance(centoridA, inputPoint) < Distance(centoridB, inputPoint) && Distance(centoridA, inputPoint) < Distance(centoridC, inputPoint)){
-					context.write(str, a);
+			if(Point.Distance(centoridA, inputPoint) < Point.Distance(centoridB, inputPoint) && Point.Distance(centoridA, inputPoint) < Point.Distance(centoridC, inputPoint)){
+					context.write(a, str);
 			}
-			if(Distance(centoridB, inputPoint) < Distance(centoridA, inputPoint) && Distance(centoridB, inputPoint) < Distance(centoridC, inputPoint)){
-				context.write(str, b);
+			if(Point.Distance(centoridB, inputPoint) < Point.Distance(centoridA, inputPoint) && Point.Distance(centoridB, inputPoint) < Point.Distance(centoridC, inputPoint)){
+				context.write(b, str);
 			}
-			if(Distance(centoridC, inputPoint) < Distance(centoridB, inputPoint) && Distance(centoridC, inputPoint) < Distance(centoridA, inputPoint)){
-				context.write(str, c);
+			if(Point.Distance(centoridC, inputPoint) < Point.Distance(centoridB, inputPoint) && Point.Distance(centoridC, inputPoint) < Point.Distance(centoridA, inputPoint)){
+				context.write(c, str);
 			}
 		}
 	}
