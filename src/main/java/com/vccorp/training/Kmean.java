@@ -108,8 +108,11 @@ public class Kmean{
 			job.setNumReduceTasks(1);
 			job.setJarByClass(Kmean.class);
 			
-			String input = "/user/hduser/input/kmeans";
-			String output = "/user/hduser/output/newCentorids";
+//			String input = "/user/hduser/input/kmeans";
+//			String output = "/user/hduser/output/newCentorids";
+			
+			String input = "hdfs://10.3.24.154:9000/user/hoant/input/kmeans";
+			String output = "hdfs://10.3.24.154:9000/user/hoant/output/newCentorids";
 			if(fs.exists(new Path(output))){
 				fs.delete(new Path(output), true);
 			}
