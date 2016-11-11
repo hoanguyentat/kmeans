@@ -14,7 +14,9 @@ import org.apache.hadoop.mapreduce.Reducer;
 @SuppressWarnings("rawtypes")
 public class ReduceKM extends Reducer<Text, Text, Text, Text>{
 	
-	Path pathOut = new Path("hdfs://localhost:9000/user/hduser/output/newCentorids/part-r-00000");
+//	Path pathOut = new Path("hdfs://localhost:9000/user/hduser/output/newCentorids/part-r-00000");
+	
+	Path pathOut = new Path("hdfs://10.3.24.154:9000/user/hoant/output/newCentorids/part-r-00000");
 	
 	@Override
 	protected void reduce(Text key, Iterable<Text> values, Context context) throws IOException, InterruptedException {

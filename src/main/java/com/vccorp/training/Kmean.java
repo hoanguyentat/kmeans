@@ -24,8 +24,11 @@ public class Kmean{
 	private static final int MAXITERATIONS = 4;
     private static final double THRESHOLD = 1;
     
-    private static Path newCentorids = new Path("hdfs://localhost:9000/user/hduser/output/newCentorids/part-r-00000");
-	private static Path oldCentorids = new Path("hdfs://localhost:9000/user/hduser/input/initCentorid/oldCentorids.txt");
+//    private static Path newCentorids = new Path("hdfs://localhost:9000/user/hduser/output/newCentorids/part-r-00000");
+//	private static Path oldCentorids = new Path("hdfs://localhost:9000/user/hduser/input/initCentorid/oldCentorids.txt");
+	
+	private static Path newCentorids = new Path("hdfs://10.3.24.154:9000/user/hoant/output/newCentorids/part-r-00000");
+	private static Path oldCentorids = new Path("hdfs://10.3.24.154:9000/user/hoant/input/initCentorid/oldCentorids.txt");
 
 	public static boolean stopIteration(Configuration conf) throws IOException{
 		FileSystem fs = FileSystem.get(conf);
